@@ -3,6 +3,8 @@ const router = express.Router();
 const { Video } = require("../models/Video");
 const { auth } = require("../middleware/auth");
 const multer= require('multer');
+const ffmpeg=require("fluent-ffmpeg");
+const { JSONCookie } = require('cookie-parser');
 
 //=================================
 //             Video
@@ -34,6 +36,46 @@ router.post('/uploadfiles',(req,res)=>{
             return res.json({success:false},err)
         }
         return res.json({success:true,url:res.req.file.path,fileName:res.req.file.filename})
+    })
+})
+
+router.post('/thumbnail',(req,res)=>{
+    //썸네일 생성 후 비디오 러닝타임 가져오기
+    let filePath=""
+    let fileDuration=""
+
+    //비디오 정보 가져오기
+    ffmpeg.ffprobe(req.body.url,function(err,metadata){
+        console.dir(metadata)
+        console.log(metadata.format.duration)
+        fileDuration=metadata.format.duration
+    })
+
+    //썸네일 생성
+    ffmpeg(req.body.url)
+    .on('filenames',function(filenames){
+        //비디오 썸네일 파일 이름 생성
+        console.log('Will generate '+filenames/JSONCookie(', '))
+        console.log(filenames)
+
+        filePath="uploads/thumbnails/"+filenames[0]
+    })
+    .on('end',function(){
+        //썸네일 생성 후 작업
+        console.log('Screenshots taken')
+        return res.json({success:true, url: filePath, fileDuration: fileDuration})
+    })
+    .on('error',function(err){
+        //에러 처리
+        console.error(err)
+        return res.json({success:false,err})
+    })
+    .screenshots({
+        //count개의 썸네일을 찍을 수 있음. folder: 해당 경로에 썸네일 저장. 썸네일 사이즈와 이름 포맷 설정
+        count:3,
+        folder:'uploads/thumbnails',
+        size:'320x240',
+        filename:'thumbnail-%b.png'
     })
 })
 
