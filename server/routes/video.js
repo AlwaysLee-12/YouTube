@@ -39,6 +39,15 @@ router.post('/uploadfiles',(req,res)=>{
     })
 })
 
+router.post('/uploadVideo',(req,res)=>{
+    //비디오 정보들 저장
+    const video=new Video(req.body) //req.body를 통해 client에서 보낸 모든 variables들에 대한 정보 받음
+    video.save((err,doc)=>{
+        if(err) return res.json({success:false,err})
+        res.status(200).json({success:true})
+    })
+})
+
 router.post('/thumbnail',(req,res)=>{
     //썸네일 생성 후 비디오 러닝타임 가져오기
     let filePath=""
