@@ -48,6 +48,16 @@ router.post('/uploadVideo',(req,res)=>{
     })
 })
 
+router.get('/getVideos',(req,res)=>{
+    //비디오를 DB에서 가져와 클라이언트에 전송
+    Video.find() //Video 컬렉션에 있는 모든 비디오를 가져옴
+        .populate('writer') //id만 넣어서 User 모델에서 모든 정보를 가져옴
+        .exec((err,videos)=>{
+            if(err) return res.status(400).send(err)
+            res.status(200).json({success:true,videos})
+        })
+})
+
 router.post('/thumbnail',(req,res)=>{
     //썸네일 생성 후 비디오 러닝타임 가져오기
     let filePath=""
