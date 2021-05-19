@@ -11,7 +11,7 @@ const {Meta}=Card
 function LandingPage() {
     const [Video, setVideo] = useState([])
 
-    {/*DOM이 로드되자마자 할 일. []이 비어있으면 한번만. []이 없으면 계속 실행*/}
+    /*DOM이 로드되자마자 할 일. []이 비어있으면 한번만. []이 없으면 계속 실행*/
     useEffect(() => {
         Axios.get('/api/video/getVideos')
             .then(response=>{
@@ -28,14 +28,14 @@ function LandingPage() {
         var seconds=Math.floor((video.duration-minutes*60))
 
         return <Col lg={6} md={8} xs={24}>
-                    <a href={`/video/post/${video._id}`}>
-                        <div style={{position:'relative'}}>
+                    <div style={{position:'relative'}}>
+                        <a href={`/video/${video._id}`}>
                             <img style={{width:'100%'}} src={`http://localhost:5000/${video.thumbnail}`} alt="thumbnail" />
                             <div className="duration">
                                 <span>{minutes}:{seconds}</span>
-                            </div>
-                        </div>
-                    </a>
+                            </div>       
+                        </a>
+                    </div>
                     <br/>
                     {/*avatar: 이미지 title: 제목 */}
                     <Meta   

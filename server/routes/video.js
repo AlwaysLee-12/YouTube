@@ -58,6 +58,15 @@ router.get('/getVideos',(req,res)=>{
         })
 })
 
+router.get('/getVideosDetail',(req,res)=>{
+    Video.findOne({"_id":req.body.videoId})
+        .populate('writer') //populate을 통해 id만으로 User 모델에 모든 정보를 가져옴
+        .exec((err,videoDetail)=>{
+            if(err) return res.status(400).send(err)
+            return res.status(200).json({success:true,videoDetail})
+        })
+})
+
 router.post('/thumbnail',(req,res)=>{
     //썸네일 생성 후 비디오 러닝타임 가져오기
     let filePath=""
