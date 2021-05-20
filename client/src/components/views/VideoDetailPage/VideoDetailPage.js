@@ -1,6 +1,7 @@
 import React,{useEffect,useState} from 'react'
 import {Row, Col, List} from 'antd'
 import Axios from 'axios'
+import SideVideo from './Sections/SideVideo'
 
 function VideoDetailPage(props) {
     const videoId=props.match.params.videoId //App.js에서 정의한 /video/:videoId 라우트를 통해 비디오 아이디 가져옴
@@ -38,7 +39,7 @@ function VideoDetailPage(props) {
                 </div>
             </Col>
             <Col lg={6} xs={24}>
-                Side Videos
+                <SideVideo />
             </Col>
         </Row>
     )
