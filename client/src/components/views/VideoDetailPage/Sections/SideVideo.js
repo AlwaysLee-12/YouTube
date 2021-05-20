@@ -5,17 +5,16 @@ function SideVideo() {
     const [sideVideos, setsideVideos] = useState([])
 
     useEffect(() => {
-        useEffect(() => {
-            Axios.get('/api/video/getVideos')
-                .then(response=>{
-                    if(response.data.success){
-                        setVideo(response.data.videos)
-                    }else{
-                        alert('비디오 가져오기 실패')
-                    }
-                })
-        }, [])
+        Axios.get('/api/video/getVideos')
+            .then(response=>{
+                if(response.data.success){
+                    setsideVideos(response.data.videos)
+                }else{
+                    alert('비디오 가져오기 실패')
+                }
+            })
     }, [])
+
 
     const renderSideVideo=sideVideos.map((video,index)=>{
         var minutes=Math.floor(video.duration/60)

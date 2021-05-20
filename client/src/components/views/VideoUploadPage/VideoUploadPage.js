@@ -41,12 +41,12 @@ function VideoUploadPage(props) {
         setCategory(e.currentTarget.value)
     }
     const onDrop= (files)=>{
-        let forData=new FormData;
+        let formData=new FormData;
         //서버에 요청을 전송하는데, 이를 같이 보내지 않으면 파일을 보낼 때 오류가 발생한다.
         const config={
             header:{'content-type':'multipart/form-data'}
         }
-        FormData.append("file",files[0])
+        formData.append("file",files[0])
 
         axios.post('/api/video/uploadfiles',formData,config)
             .then(response=>{

@@ -1,7 +1,6 @@
 import React, { useState,useEffect } from 'react'
 import { FaCode } from "react-icons/fa";
 import {Card,Icon,Avatar,Col,Typography,Row} from 'antd'
-import moment from 'moment';
 import Axios from 'axios';
 import moment from 'moment'
 
@@ -23,7 +22,7 @@ function LandingPage() {
             })
     }, [])
 
-    const rederCards=Video.map((video,index)=>{
+    const renderCards=Video.map((video,index)=>{
         var minutes=Math.floor(video.duration/60)
         var seconds=Math.floor((video.duration-minutes*60))
 
@@ -52,7 +51,7 @@ function LandingPage() {
 
     return (
         <div style={{width:'85%',margin:'3rem auto'}}>
-            <TItle level={2}>Recommended</TItle>
+            <Title level={2}>Recommended</Title>
             <ht />
             {/**/}
             <Row gutter={[32,16]}>
