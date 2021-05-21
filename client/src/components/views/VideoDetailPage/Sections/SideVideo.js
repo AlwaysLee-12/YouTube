@@ -35,7 +35,7 @@ function SideVideo() {
                     <span>{minutes} : {seconds}</span><br />
                 </a>
             </div>
-        </div>
+            </div>
     })
 
     return (

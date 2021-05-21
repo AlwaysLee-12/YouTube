@@ -26,7 +26,8 @@ function LandingPage() {
         var minutes=Math.floor(video.duration/60)
         var seconds=Math.floor((video.duration-minutes*60))
 
-        return <Col lg={6} md={8} xs={24}>
+        return <Col lg={6} md={8} xs={24}> 
+        {/*윈도우 크기가 가장 작을때는 컬럼 하나가 24 사이즈(컬럼 1), 중간일 때는 8 사이즈(컬럼 3), 가장 클때는 6사이즈(컬럼 4)*/}
                     <div style={{position:'relative'}}>
                         <a href={`/video/${video._id}`}>
                             <img style={{width:'100%'}} src={`http://localhost:5000/${video.thumbnail}`} alt="thumbnail" />
@@ -52,11 +53,10 @@ function LandingPage() {
     return (
         <div style={{width:'85%',margin:'3rem auto'}}>
             <Title level={2}>Recommended</Title>
-            <ht />
+            <hr />
             {/**/}
             <Row gutter={[32,16]}>
                 {renderCards}
-                {/*윈도우 크기가 가장 작을때는 컬럼 하나가 24 사이즈(컬럼 1), 중간일 때는 8 사이즈(컬럼 3), 가장 클때는 6사이즈(컬럼 4)*/}
             </Row>
         </div>
     )
