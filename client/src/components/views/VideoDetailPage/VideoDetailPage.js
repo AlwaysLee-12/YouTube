@@ -29,7 +29,7 @@ function VideoDetailPage(props) {
                 <div style={{width:'100%', padding:'3rem 4rem'}}>
                     <video style={{width:'100%'}} src={`http://localhost:5000/${VideoDetail.filePath}`} constols />
                     <List.Item
-                        actions={[<Subcribe userTo={Video.writer._id} />]}>
+                        actions={[<Subcribe userTo={Video.writer._id} userFrom={localStorage.getItem('userId')}/>]}>
                         <List.Item.Meta
                             avatar={<Avatar src={VideoDetail.writer.image}/>}
                             title={VideoDetail.writer.name}
