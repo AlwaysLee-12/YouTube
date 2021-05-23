@@ -5,6 +5,7 @@ const { auth } = require("../middleware/auth");
 const multer= require('multer');
 const ffmpeg=require("fluent-ffmpeg");
 const { JSONCookie } = require('cookie-parser');
+const {Subscriber}=require('../models/Subscriber')
 
 //=================================
 //             Video
@@ -65,6 +66,28 @@ router.get('/getVideosDetail',(req,res)=>{
             if(err) return res.status(400).send(err)
             return res.status(200).json({success:true,videoDetail})
         })
+})
+
+router.post('/getSubscriptionVideos',(req,res)=>{
+    //자신의 아이디를 이용해 구독한 사람들을 탐색
+    Subscriber.find({userFrom:req.body.userFrom})
+        .exec((err,subscriberInfo)=>{
+            if(err) return res.status(400).send(err)
+            let subscribedUser=[];
+            subscriberInfo.map((Subscriber,i)=>{
+                subscribedUser.push(Subscriber.userTo)
+            })  
+
+            //찾은 사람들의 비디오 가지고 옴
+            Video.find({writer:{$in:subscribedUser}}) //해당 배열에 모든 유저의 아이디로 writer들을 찾음
+                .populate('writer') //writer의 이미지, 이름 등의 정보를 받음
+                .exec((err,videos)=>{
+                    if(err) return res.status(400).send(err)
+                    return res.status(200).json({success:true},videos)
+                })
+        })
+
+    
 })
 
 router.post('/thumbnail',(req,res)=>{
