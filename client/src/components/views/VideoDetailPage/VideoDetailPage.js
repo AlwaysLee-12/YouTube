@@ -4,6 +4,7 @@ import Axios from 'axios'
 import SideVideo from './Sections/SideVideo'
 import Subscribe from './Sections/Subscribe'
 import { Video } from '../../../../../server/models/Video'
+import Comment from './Sections/Comment'
 
 function VideoDetailPage(props) {
     const videoId=props.match.params.videoId //App.js에서 정의한 /video/:videoId 라우트를 통해 비디오 아이디 가져옴
@@ -41,6 +42,7 @@ function VideoDetailPage(props) {
                     </List.Item>
 
                     {/* Comments */}
+                    <Comment/>
                 </div>
             </Col>
             <Col lg={6} xs={24}>
