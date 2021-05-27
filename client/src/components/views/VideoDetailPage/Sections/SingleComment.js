@@ -14,7 +14,7 @@ function SingleComment(props) {
         <span onClick={onClickReplyOpen} key="comment-basis-to">Reply</span>
     ]
     const onHandleChange=(e)=>{
-        setCommentValue(e.currentTarget.CommentValue)
+        setCommentValue(e.currentTarget.value)
     }
     const onSubmit=(e)=>{
         e.preventDefault()
@@ -30,7 +30,8 @@ function SingleComment(props) {
         .then(response=>{
             if(response.data.success){
                 props.refreshFunction(response.data.result)
-                setcommentValue("")
+                setCommentValue("")
+                setOpenReply(false)
             }else{
                 alert('코멘트를 저장하지 못함')
             }
