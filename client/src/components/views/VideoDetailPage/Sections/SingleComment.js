@@ -2,6 +2,7 @@ import React,{useEffect,useState} from 'react'
 import {Comment, Avatar, Button, Input} from 'antd'
 import Axios from 'axios'
 import {useSelector} from 'react-redux'
+import LikeDislikes from '../Sections/LikeDislikes'
 
 function SingleComment(props) {
     const [OpenReply, setOpenReply] = useState(false)
@@ -11,7 +12,8 @@ function SingleComment(props) {
         setOpenReply(!OpenReply)
     }
     const actions=[
-        <span onClick={onClickReplyOpen} key="comment-basis-to">Reply</span>
+        <LikeDislikes userId={localStorage.getItem('userId')} commentId={props.comment._id}/>
+        ,<span onClick={onClickReplyOpen} key="comment-basis-to">Reply</span>
     ]
     const onHandleChange=(e)=>{
         setCommentValue(e.currentTarget.value)
