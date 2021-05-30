@@ -54,26 +54,82 @@ function LikeDislikes(props) {
             })
     }, [])
 
+    const onLike=()=>{
+        if(LikeAction===null){
+            Axios.post('/api/like/upLike',variable)
+                .then(response=>{
+                    if(response.data.success){
+                        setLikes(Likes+1)
+                        setLikeAction('liked') //like 버튼 누르면 검은색으로 눌림표시
+                        if(DislikeAction!==null){
+                            setDislikeAction(null)
+                            setDislikes(Dislikes-1)
+                        }
+                    }else{
+                        alert('Like를 올리지 못함')
+                    }
+                })
+        }else{
+            Axios.post('/api/like/unLike',variable)
+            .then(response=>{
+                if(response.data.success){
+                    setLikes(Likes-1)
+                    setLikeAction(null)
+                }else{
+                    alert('Like를 내리지 못함')
+                }
+            })
+        }
+    }
+
+    const onDislike=()=>{
+        if(DislikeAction!==null){
+            Axios.post('/api/like/unDislike',variable)
+                .then(response=>{
+                    if(response.data.success){
+                        setDislikes(Dislikes-1)
+                        setDislikeAction('null') 
+                    }else{
+                        alert('Dislike을 지우지 못함')
+                    }
+                })
+        }else{
+            Axios.post('/api/like/upDislike',variable)
+            .then(response=>{
+                if(response.data.success){
+                    setDislikes(Dislikes+1)
+                    setDislikeAction('disliked')
+                    if(LikeAction!==null){
+                        setLikeAction(null)
+                        setLikes(Likes-1)
+                    }
+                }else{
+                    alert('Like를 내리지 못함')
+                }
+            })
+        }
+    }
+
     return (
         <div>
             <span key="comment-basic-like">
                 <Tooltip title="Like">
                     <Icon type="like"
                         theme={LikeAction==='liked'? 'filled' : 'outlined'}
-                        onClick
+                        onClick={onLike}
                     />
                 </Tooltip>
                 <span style={{padding:'8px',cursor:'auto'}}>{Likes}</span>
-            </span>
+            </span>&nbsp;&nbsp;
             <span key="comment-basic-dislike">
                 <Tooltip title="Dislike">
                     <Icon type="dislike"
                         theme={DislikeAction==='disliked'? 'filled':'outlined'}
-                        onClick
+                        onClick={onDislike}
                     />
                 </Tooltip>
                 <span style={{padding:'8px',cursor:'auto'}}>{Dislikes}</span>
-            </span>
+            </span>&nbsp;&nbsp;
         </div>
     )
 }
